@@ -42,56 +42,31 @@ def spell_slot_tracker():
 
         return redirect(url_for("spell_slot_tracker"))
 
-
-    # ---------------------------------------------------------
     # LOAD DATA FROM SESSION
-    # ---------------------------------------------------------
 
     character_class = session.get("class")
     character_level = session.get("character_level")
 
-    max_spell_slots = session.get(
-        "max_spell_slots",
-        {}
-    )
+    max_spell_slots = session.get("max_spell_slots", {})
 
-    spell_slots = session.get(
-        "spell_slots",
-        {}
-    )
+    spell_slots = session.get("spell_slots", {})
 
 
     # Determine whether the selected class is a caster
     track_spell_slots = bool(max_spell_slots)
 
 
-    return render_template(
-        "spell_slot_tracker.html",
-
-        character_class=character_class,
-        character_level=character_level,
-
-        max_spell_slots=max_spell_slots,
-        spell_slots=spell_slots,
-
-        track_spell_slots=track_spell_slots
-    )
+    return render_template("spell_slot_tracker.html", character_class=character_class, character_level=character_level, max_spell_slots=max_spell_slots, spell_slots=spell_slots, track_spell_slots=track_spell_slots)
 
 
 @app.route("/spell_slot_tracker_save_slots", methods=["POST"])
 def spell_slot_tracker_save_slots():
-
-    # ---------------------------------------------------------
     # SAVE CURRENT SPELL SLOTS
-    # ---------------------------------------------------------
 
     current_spell_slots = {}
 
     for i in range(1, 10):
-
-        current_spell_slots[f"level_{i}"] = int(
-            request.form.get(f"level_{i}", 0)
-        )
+        current_spell_slots[f"level_{i}"] = int(request.form.get(f"level_{i}", 0))
 
     save_spell_slots_to_session(current_spell_slots)
 
@@ -100,15 +75,9 @@ def spell_slot_tracker_save_slots():
 
 @app.route("/spell_slot_tracker_long_rest", methods=["POST"])
 def spell_slot_tracker_long_rest():
-
-    # ---------------------------------------------------------
     # LONG REST: RESET CURRENT SLOTS TO MAXIMUM
-    # ---------------------------------------------------------
 
-    max_spell_slots = session.get(
-        "max_spell_slots",
-        {}
-    )
+    max_spell_slots = session.get("max_spell_slots", {})
 
     save_spell_slots_to_session(max_spell_slots)
 
