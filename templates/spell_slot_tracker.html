@@ -7,16 +7,8 @@
 
     <title>Digitale D&D Spell Slot Tracker</title>
 
-    <link
-        rel="shortcut icon"
-        href="{{ url_for('static', filename='favicon.ico') }}"
-        type="image/x-icon"
-    >
-
-    <link
-        rel="stylesheet"
-        href="{{ url_for('static', filename='spell_slot_tracker.css') }}"
-    >
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="{{ url_for('static', filename='spell_slot_tracker.css') }}">
 </head>
 
 
@@ -31,10 +23,7 @@
      CLASS + LEVEL
      ========================================================= -->
 
-<form
-    action="{{ url_for('spell_slot_tracker') }}"
-    method="post"
->
+<form action="{{ url_for('spell_slot_tracker') }}" method="post">
 
     <label for="class">
         Kies je class.
@@ -89,16 +78,7 @@
         Kies je level
     </label>
 
-    <input
-        type="number"
-        name="level"
-        id="level"
-        value="{{ character_level or 1 }}"
-        min="1"
-        max="20"
-        required
-    >
-
+    <input type="number" name="level" id="level" value="{{ character_level or 1 }}" min="1" max="20" required>
 
     <button type="submit">
         Selecteer je class en level.
@@ -113,10 +93,7 @@
 
 {% if track_spell_slots %}
 
-<form
-    action="{{ url_for('spell_slot_tracker_save_slots') }}"
-    method="post"
->
+<form action="{{ url_for('spell_slot_tracker_save_slots') }}" method="post">
 
     <header>
         Spell Slots
@@ -135,15 +112,7 @@
                 Level {{ i }} Spell Slots
             </label>
 
-            <input
-                type="number"
-                name="{{ slot_name }}"
-                id="{{ slot_name }}"
-                min="0"
-                max="{{ maximum }}"
-                value="{{ current }}"
-                required
-            >
+            <input type="number" name="{{ slot_name }}" id="{{ slot_name }}" min="0" max="{{ maximum }}" value="{{ current }}" required>
 
         {% endif %}
 
@@ -161,10 +130,7 @@
      LONG REST
      ========================================================= -->
 
-<form
-    action="{{ url_for('spell_slot_tracker_long_rest') }}"
-    method="post"
->
+<form action="{{ url_for('spell_slot_tracker_long_rest') }}" method="post">
 
     <button type="submit">
         Long Rest (Reset)
