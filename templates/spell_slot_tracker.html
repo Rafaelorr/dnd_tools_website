@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Digitale D&D Spell Slot Tracker</title>
+
+    <link
+        rel="shortcut icon"
+        href="{{ url_for('static', filename='favicon.ico') }}"
+        type="image/x-icon"
+    >
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='spell_slot_tracker.css') }}"
+    >
+</head>
+
+
+<body>
+
+<header>
+    Digitale D&D Spell Slot Tracker
+</header>
+
+
+<!-- =========================================================
+     CLASS + LEVEL
+     ========================================================= -->
+
+<form
+    action="{{ url_for('spell_slot_tracker') }}"
+    method="post"
+>
+
+    <label for="class">
+        Kies je class.
+    </label>
+
+    <select name="class" id="class" required>
+
+        <option value="bard"
+            {% if character_class == "bard" %}selected{% endif %}>
+            Bard
+        </option>
+
+        <option value="cleric"
+            {% if character_class == "cleric" %}selected{% endif %}>
+            Cleric
+        </option>
+
+        <option value="druid"
+            {% if character_class == "druid" %}selected{% endif %}>
+            Druid
+        </option>
+
+        <option value="paladin"
+            {% if character_class == "paladin" %}selected{% endif %}>
+            Paladin
+        </option>
+
+        <option value="ranger"
+            {% if character_class == "ranger" %}selected{% endif %}>
+            Ranger
+        </option>
+
+        <option value="sorcerer"
+            {% if character_class == "sorcerer" %}selected{% endif %}>
+            Sorcerer
+        </option>
+
+        <option value="warlock"
+            {% if character_class == "warlock" %}selected{% endif %}>
+            Warlock
+        </option>
+
+        <option value="wizard"
+            {% if character_class == "wizard" %}selected{% endif %}>
+            Wizard
+        </option>
+
+    </select>
+
+
+    <label for="level">
+        Kies je level
+    </label>
+
+    <input
+        type="number"
+        name="level"
+        id="level"
+        value="{{ character_level or 1 }}"
+        min="1"
+        max="20"
+        required
+    >
+
+
+    <button type="submit">
+        Selecteer je class en level.
+    </button>
+
+</form>
+
+
+<!-- =========================================================
+     SPELL SLOTS
+     ========================================================= -->
+
+{% if track_spell_slots %}
+
+<form
+    action="{{ url_for('spell_slot_tracker_save_slots') }}"
+    method="post"
+>
+
+    <header>
+        Spell Slots
+    </header>
+
+
+    {% for i in range(1, 10) %}
+
+        {% set slot_name = "level_" ~ i %}
+        {% set maximum = max_spell_slots.get(slot_name, 0) %}
+        {% set current = spell_slots.get(slot_name, 0) %}
+
+        {% if maximum > 0 %}
+
+            <label for="{{ slot_name }}">
+                Level {{ i }} Spell Slots
+            </label>
+
+            <input
+                type="number"
+                name="{{ slot_name }}"
+                id="{{ slot_name }}"
+                min="0"
+                max="{{ maximum }}"
+                value="{{ current }}"
+                required
+            >
+
+        {% endif %}
+
+    {% endfor %}
+
+
+    <button type="submit">
+        Save Spell Slots
+    </button>
+
+</form>
+
+
+<!-- =========================================================
+     LONG REST
+     ========================================================= -->
+
+<form
+    action="{{ url_for('spell_slot_tracker_long_rest') }}"
+    method="post"
+>
+
+    <button type="submit">
+        Long Rest (Reset)
+    </button>
+
+</form>
+
+
+{% else %}
+
+    <p>
+        Selecteer eerst je class en level.
+    </p>
+
+{% endif %}
+
+</body>
+
+</html>
