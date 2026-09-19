@@ -15,7 +15,7 @@ def save_spell_slots_to_session(spell_slots):
 
 @app.route("/")
 def home():
-    return redirect(url_for("spell_slot_tracker"))
+    return render_template("home.html",)
 
 
 @app.route("/spell_slot_tracker", methods=["GET", "POST"])
