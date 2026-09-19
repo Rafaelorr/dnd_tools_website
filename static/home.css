@@ -16,3 +16,8 @@ header {
 p {
     margin-top: 1rem;
 }
+
+i {
+    size: 50%;
+    color: #808080
+}
